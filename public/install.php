@@ -1,5 +1,9 @@
 <?php
 
+if (!file_exists(__DIR__ . '/../vendor/autoload.php')) {
+	die('Please run composer update first!');
+}
+
 require __DIR__ . '/../vendor/autoload.php';
 
 use drpdev\Cloud\Installer;
@@ -36,8 +40,8 @@ if (!empty($_POST)) {
 			<?php if (!is_writable(__DIR__ . '/../core/config')) {
 				echo '<p class="error">Unfortunately we don\'t have permissions to generate config files in core/config/. Please create them manually.</p>';
 			} else { ?>
-			<?= !empty($message) ? '<p class="error">' . $message . '</p>' : '' ?>
-			<?php
+				<?= !empty($message) ? '<p class="error">' . $message . '</p>' : '' ?>
+				<?php
 				if ($success) {
 					echo '<p>The config files have been created.</p>';
 					if (@rename(__DIR__ . '/install.php', __DIR__ . '/../install.php')) {
@@ -68,54 +72,54 @@ if (!empty($_POST)) {
 
 					echo '<p>Please create a cron job that runs cron/check_files.php every <i>n</i> minutes (depending on this interval, the email notification and public link generation might delay up to <i>n</i> minutes)</p>';
 				} else {
-			?>
-			<form method="POST">
-				<h2>General Config</h2>
-				<label>Admin User:</label>
-				<input type="text" name="username" placeholder="username" /><br />
-				<input type="password" name="password" placeholder="password" /><br />
-				<label>Public token length:</label>
-				<input class="full-width" type="text" name="token_length" placeholder="16" value="16" required /><br />
-				<label>URL</label>
-				<input class="full-width" type="text" name="url" placeholder="https://cloud.example.com" required /><br />
-				<label>Send email notification(s) after upload is complete:</label>
-				<input type="checkbox" name="send_notifications" value="yes" checked />
-				<label>Notification Emails:</label>
-				<input class="full-width" type="text" name="emails" placeholder="mail@example.com, mail2@example.com" />
-				<h2>DB Config</h2>
-				<label>Host</label>
-				<input class="full-width" type="text" name="db_host" placeholder="127.0.0.1" value="127.0.0.1" required /><br />
-				<label>Database</label>
-				<input class="full-width" type="text" name="db_database" placeholder="cloud" value="" required /><br />
-				<label>User</label>
-				<input class="full-width" type="text" name="db_user" placeholder="cloud" value="" required /><br />
-				<label>Password</label>
-				<input class="full-width" type="text" name="db_password" placeholder="" value="" required /><br />
-				<div class="mail-config">
-					<h2>Mail Config (if "send notifications" is enabled)</h2>
-					<input type="checkbox" name="mail_use_smtp" value="yes" /> connect to external SMTP server
-					<label>SMTP Secure</label>
-					<select name="mail_smtp_secure">
-						<option value="ssl">SSL</option>
-						<option value="tls">TLS</option>
-					</select>
-					<label>Email sender address:</label>
-					<input class="full-width" type="text" name="mail_from" placeholder="noreply@example.com" value="" /><br />
-					<label>Server (leave blank if you are not using smtp):</label>
-					<input class="full-width" type="text" name="mail_server" placeholder="mail.example.com" value="" /><br />
-					<label>Port</label>
-					<input class="full-width" type="text" name="mail_port" placeholder="465" value="465" /><br />
-					<label>User</label>
-					<input class="full-width" type="text" name="mail_user" placeholder="noreply@example.com" value="" /><br />
-					<label>Password</label>
-					<input class="full-width" type="text" name="mail_password" /><br />
-				</div>
+					?>
+					<form method="POST">
+						<h2>General Config</h2>
+						<label>Admin User:</label>
+						<input class="full-width" type="text" name="username" placeholder="username" required /><br />
+						<input class="full-width" type="password" name="password" placeholder="password" required /><br />
+						<label>Public token length:</label>
+						<input class="full-width" type="text" name="token_length" placeholder="16" value="16" required /><br />
+						<label>URL</label>
+						<input class="full-width" type="text" name="url" placeholder="https://cloud.example.com" required /><br />
+						<label>Send email notification(s) after upload is complete:</label>
+						<input type="checkbox" name="send_notifications" value="yes" checked />
+						<label>Notification Emails:</label>
+						<input class="full-width" type="text" name="emails" placeholder="mail@example.com, mail2@example.com" />
+						<h2>DB Config</h2>
+						<label>Host</label>
+						<input class="full-width" type="text" name="db_host" placeholder="127.0.0.1" value="127.0.0.1" required /><br />
+						<label>Database</label>
+						<input class="full-width" type="text" name="db_database" placeholder="cloud" value="" required /><br />
+						<label>User</label>
+						<input class="full-width" type="text" name="db_user" placeholder="cloud" value="" required /><br />
+						<label>Password</label>
+						<input class="full-width" type="text" name="db_password" placeholder="" value="" required /><br />
+						<div class="mail-config">
+							<h2>Mail Config (if "send notifications" is enabled)</h2>
+							<input type="checkbox" name="mail_use_smtp" value="yes" /> connect to external SMTP server
+							<label>SMTP Secure</label>
+							<select name="mail_smtp_secure">
+								<option value="ssl">SSL</option>
+								<option value="tls">TLS</option>
+							</select>
+							<label>Email sender address:</label>
+							<input class="full-width" type="text" name="mail_from" placeholder="noreply@example.com" value="" /><br />
+							<label>Server (leave blank if you are not using smtp):</label>
+							<input class="full-width" type="text" name="mail_server" placeholder="mail.example.com" value="" /><br />
+							<label>Port</label>
+							<input class="full-width" type="text" name="mail_port" placeholder="465" value="465" /><br />
+							<label>User</label>
+							<input class="full-width" type="text" name="mail_user" placeholder="noreply@example.com" value="" /><br />
+							<label>Password</label>
+							<input class="full-width" type="text" name="mail_password" /><br />
+						</div>
 
-				<button class="btn fill full-width" style="margin: 20px 0;">Generate config files</button>
-			</form>
-			<?php
-				}
-			} ?>
+						<button class="btn fill full-width" style="margin: 20px 0;">Generate config files</button>
+					</form>
+				<?php
+			}
+		} ?>
 		</div>
 	</div>
 </body>

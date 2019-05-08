@@ -119,13 +119,13 @@ p.error {
 	color: #b00020;
 }
 
-.setup {
+.setup, .files {
 	text-align: left;
 	max-width: 800px;
 	margin: 0 auto;
 }
 
-.setup h1, .setup h2 {
+.setup h1, .setup h2, .files h1, .files h2 {
 	text-align: left;
 	margin-top: 50px;
 }

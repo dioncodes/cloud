@@ -1,3 +1,23 @@
+<?php
+
+session_start();
+
+require __DIR__ . '/../vendor/autoload.php';
+
+use drpdev\Cloud\UserManager;
+
+if (UserManager::loggedIn()) {
+	header('Location: ./admin');
+	exit;
+}
+
+if (!empty($_POST['username'])) {
+	if (UserManager::login($_POST['username'], $_POST['password'])) {
+		header('Location: ./admin');
+		exit;
+	}
+}
+?>
 <!DOCTYPE html>
 <html>
 

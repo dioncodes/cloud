@@ -51,7 +51,7 @@ class Downloader {
 	 * @param object $row
 	 * @return File
 	 */
-	private static function fileFromRow($row) {
+	public static function fileFromRow($row) {
 		return new File(
 			$row->id,
 			$row->file_name,
