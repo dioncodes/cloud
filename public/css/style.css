@@ -119,6 +119,23 @@ p.error {
 	color: #b00020;
 }
 
+.setup {
+	text-align: left;
+	max-width: 800px;
+	margin: 0 auto;
+}
+
+.setup h1, .setup h2 {
+	text-align: left;
+	margin-top: 50px;
+}
+
+label {
+	display: block;
+	color: #00796B;
+	margin-top: 20px;
+}
+
 @media(max-width: 500px) {
 
 	h1 {

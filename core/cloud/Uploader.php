@@ -116,7 +116,7 @@ class Uploader {
 			$mail->SMTPAuth = true;
 			$mail->Username = $mailConfig['user'];
 			$mail->Password = $mailConfig['password'];
-			$mail->SMTPSecure = 'ssl';
+			$mail->SMTPSecure = $mailConfig['smtp_secure'] ?: 'ssl';
 		}
 
 		foreach($recipients as $recipient) {
