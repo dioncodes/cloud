@@ -44,10 +44,10 @@ class Uploader {
 			if ($fileInfo->isDot() || $fileInfo->isDir()) continue;
 			if ($this->checkIfUploadIsDone($fileInfo->getFileName())) {
 				if ($fileId = $this->insertFile($fileInfo->getFileName(), $fileInfo->getSize())) {
-					mkdir(__DIR__ . '/../../files/' . $fileId);
 					if (!is_dir(__DIR__ . '/../../files')) {
 						mkdir(__DIR__ . '/../../files');
 					}
+					mkdir(__DIR__ . '/../../files/' . $fileId);
 					rename($fileInfo->getPath() . '/' . $fileInfo->getFileName(), __DIR__ . '/../../files/' . $fileId . '/' . $fileInfo->getFileName());
 					if ($this->log) {
 						echo 'File moved (' . $fileInfo->getPath() . ' to ' . __DIR__ . '/../../files/' . $fileId . '/' . $fileInfo->getFileName() . ')' . PHP_EOL;
