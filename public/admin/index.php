@@ -17,15 +17,14 @@ $message = null;
 
 if (!empty($_GET['deleteFile'])) {
 	$downloader = new Downloader();
-	if ($file = $downloader->findFile($_GET['deleteFile'])) {
-		try {
+	try {
+		if ($file = $downloader->findFile($_GET['deleteFile'])) {
 			AdminHelper::deleteFile($file);
-		} catch (Exception $e) {
-			$message = '<p class="error">Error while trying to delete file: ' . $e->getMessage() . '</p>';
 		}
+	} catch (Exception $e) {
+		$message = '<p class="error">Error while trying to delete file: ' . $e->getMessage() . '</p>';
 	}
 }
-
 ?>
 <!DOCTYPE html>
 <html>
