@@ -45,6 +45,14 @@ if (!empty($_POST)) {
 					} else {
 						echo '<p class="error"><b>The installation script could not be moved. Please make sure to delete or move the install.php file!</b></p>';
 					}
+
+					if (@mkdir(__DIR__ . '/../upload')) {
+						echo '<p>The upload folder has been created. Upload files to this folder, to automatically receive an email (if enabled) with a secure download link.</p>';
+					} else {
+						echo '<p class="error"><b>The upload folder could not be created. Please create it manually in the root directory.</b></p>';
+					}
+
+					echo '<p>Please create a cron job that runs cron/check_files.php every <i>n</i> minutes (depending on this interval, the email notification and public link generation might delay up to <i>n</i> minutes)</p>';
 				} else {
 			?>
 			<form method="POST">
