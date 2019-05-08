@@ -35,7 +35,7 @@ if (!empty($_POST)) {
 			<h1>Setup</h1>
 			<?php if (!is_writable(__DIR__ . '/../core/config')) {
 				echo '<p class="error">Unfortunately we don\'t have permissions to generate config files in core/config/. Please create them manually.</p>';
-			} ?>
+			} else { ?>
 			<?= !empty($message) ? '<p class="error">' . $message . '</p>' : '' ?>
 			<?php
 				if ($success) {
@@ -50,6 +50,13 @@ if (!empty($_POST)) {
 						echo '<p>The upload folder has been created. Upload files to this folder, to automatically receive an email (if enabled) with a secure download link.</p>';
 					} else {
 						echo '<p class="error"><b>The upload folder could not be created. Please create it manually in the root directory.</b></p>';
+					}
+
+					try {
+						Installer::setUpDatabase();
+						echo '<p>The database tables have been set up successfully.</p>';
+					} catch (\Exception $e) {
+						echo '<p class="error">An error occured while setting up the database tables: ' . $e->getMessage() . '</p>';
 					}
 
 					echo '<p>Please create a cron job that runs cron/check_files.php every <i>n</i> minutes (depending on this interval, the email notification and public link generation might delay up to <i>n</i> minutes)</p>';
@@ -96,7 +103,9 @@ if (!empty($_POST)) {
 
 				<button class="btn fill full-width" style="margin: 20px 0;">Generate config files</button>
 			</form>
-			<?php } ?>
+			<?php
+				}
+			} ?>
 		</div>
 	</div>
 </body>

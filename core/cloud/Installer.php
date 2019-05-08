@@ -54,4 +54,41 @@ return [
 			throw new \Exception('file_write_permission_denied');
 		}
 	}
+
+	public static function setUpDatabase() {
+		try {
+			$dbConfig = require __DIR__ . '/../config/db-config.php';
+			$db = Database::MySQL($dbConfig);
+		} catch (\Exception $e) {
+			throw new \Exception('db_connection_failed');
+		}
+
+		try {
+			$stmt1 = $db->pdo()->prepare("
+			CREATE TABLE `files` (
+				`id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+				`public_token` varchar(64) NOT NULL DEFAULT '',
+				`file_name` varchar(200) NOT NULL DEFAULT '',
+				`file_size` bigint(32) DEFAULT NULL,
+				`upload_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+				PRIMARY KEY (`id`),
+				UNIQUE KEY `public_token` (`public_token`)
+			) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4");
+
+			$stmt2 = $db->pdo()->prepare( "
+			CREATE TABLE `pending_files` (
+				`id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+				`file_name` varchar(200) NOT NULL DEFAULT '',
+				`file_size` bigint(32) NOT NULL DEFAULT '0',
+				PRIMARY KEY (`id`)
+			) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+			");
+
+			if (!$stmt1->execute() && $stmt2->execute()) {
+				throw new \Exception('tables_not_created');
+			}
+		} catch (\Exception $e) {
+			throw new \Exception('tables_not_created');
+		}
+	}
 }
