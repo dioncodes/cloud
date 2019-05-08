@@ -8,6 +8,9 @@ Simply drop files on your server via (S)FTP and receive an email with a secure d
 * access the install.php in your browser, or copy and adjust the `-sample.php` files in `core/config`. Make sure to **remove or move the install.php file** after the setup is done.
 * create a cron job that runs `cron/check_files.php` every `n` minutes (depending on this interval, the email notification and public link generation might delay up to `n` minutes 
 
+# Usage
+* Upload files via (S)FTP to the `upload` folder and a public access link will be generated after the upload is completed and sent to the configured email address(es) (if enabled).
+
 ```
 server {
 
