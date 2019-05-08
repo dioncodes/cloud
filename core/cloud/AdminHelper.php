@@ -40,4 +40,27 @@ class AdminHelper {
 		return $stmt->fetchAll() ?: [];
 	}
 
+	public static function deleteFile($file) {
+		try {
+			$dbConfig = require __DIR__ . '/../config/db-config.php';
+			$db = Database::MySQL($dbConfig);
+		} catch (\Exception $e) {
+			throw new \Exception('db_connection_failed');
+		}
+
+		try {
+			$stmt = $db->pdo()->prepare('DELETE FROM `files` WHERE `id`=:id');
+			$stmt->execute([':id' => $file->getId()]);
+		} catch (\Exception $e) {
+			throw new \Exception('database_entry_not_deleted');
+		}
+
+		try {
+			unlink(__DIR__ . '/../../files/' .$file->getId() . '/' . $file->getFileName());
+			rmdir(__DIR__ . '/../../files/' . $file->getId());
+		} catch (\Exception $e) {
+			throw new \Exception('file_not_deleted');
+		}
+	}
+
 }
