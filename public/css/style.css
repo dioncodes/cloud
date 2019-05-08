@@ -1,0 +1,141 @@
+@import url('https://fonts.googleapis.com/css?family=Muli:300,400,700');
+body {
+	background: #141C24;
+	color: white;
+	font-family: Muli, 'Helvetica Neue', 'Source Sans Pro', Helvetica, sans-serif;
+	font-weight: 200, lighter;
+	text-align:center;
+	-webkit-box-shadow: 0 5px 0 #00796B inset;
+	-moz-box-shadow: 0 5px 0 #00796B inset;
+	box-shadow: 0 5px 0 #00796B inset;
+	margin: 0;
+	padding-top: 100px;
+}
+h1 {
+	margin: 0;
+	text-align:center;
+	font-size: 40pt;
+	font-weight:100;
+	color: #fff;
+	word-break: break-all;
+}
+a:not(.btn) {
+	color: #00796B;
+	text-decoration: none;
+}
+
+a:not(.btn):hover, a:not(.btn):focus {
+	text-decoration: underline;
+}
+p {
+	color: gray;
+	font-weight:200;
+	line-height: 1.5;
+}
+
+#content {
+	padding: 30px;
+	padding-left: 0;
+	padding-right: 0;
+	margin-top: 100px;
+	/* background: #353535; */
+}
+
+.btn.fill {
+	text-decoration: none;
+	position: relative;
+	height: 45px;
+	width: 150px;
+	margin: 10px 7px;
+	padding: 10px 20px;
+	font-size: 15px;
+	letter-spacing: 2px;
+	color: white;
+	border: 2px #fff solid;
+	border-radius: 0;
+	text-transform: uppercase;
+	outline: 0;
+	overflow:hidden;
+	background: none;
+	z-index: 1;
+	cursor: pointer;
+}
+
+.btn.fill:hover {
+	transition:         0.08s ease-in;
+	-o-transition:      0.08s ease-in;
+	-ms-transition:     0.08s ease-in;
+	-moz-transition:    0.08s ease-in;
+	-webkit-transition: 0.08s ease-in;
+	color: #323239;
+}
+
+.btn.fill:before {
+	content: "";
+	position: absolute;
+	background: #fff;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	top: 100%;
+	z-index: -1;
+	-webkit-transition: top 0.09s ease-in;
+}
+
+.btn.fill:hover:before {
+	top: 0;
+}
+
+div.btns {
+	margin-top: 50px;
+}
+
+div#footer {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	font-size: 8pt;
+}
+
+.full-width, .btn.fill.full-width	{
+	box-sizing: border-box;
+	width: 100%;
+	max-width: 300px;
+}
+
+input[type="text"], input[type="password"] {
+	display: inline-block;
+	background: #fff;
+	color: #141C24;
+	padding: 10px 15px;
+	border-radius: 0;
+	border: none;
+	margin-top: 10px;
+	outline: none;
+}
+
+p.error {
+	color: #b00020;
+}
+
+@media(max-width: 500px) {
+
+	h1 {
+		font-size: 26pt;
+	}
+
+	#content p {
+		padding: 5px;
+	}
+
+	body {
+		padding-top: 25px;
+	}
+
+	#content p.links {
+		background: transparent;
+		margin: 0;
+		padding: 0;
+	}
+}

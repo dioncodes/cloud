@@ -1,0 +1,19 @@
+{
+    "name": "drpdev/cloud",
+    "description": "File Storage / Cloud",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Dion Purushotham",
+            "email": "mail@drpdev.de"
+        }
+    ],
+    "require": {
+        "phpmailer/phpmailer": "^6.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "drpdev\\Cloud\\": "core/cloud"
+        }
+    }
+}
