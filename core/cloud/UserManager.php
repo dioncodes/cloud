@@ -28,6 +28,12 @@ class UserManager {
 		return !empty($_SESSION['username']);
 	}
 
+	public static function logout() {
+		$_SESSION['username'] = null;
+		session_unset();
+		session_destroy();
+	}
+
 	public static function getCurrentUser() {
 		if (empty($_SESSION['username'])) {
 			throw new \Exception('not_logged_in');

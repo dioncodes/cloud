@@ -8,6 +8,12 @@ use drpdev\Cloud\UserManager;
 use drpdev\Cloud\AdminHelper;
 use drpdev\Cloud\Downloader;
 
+if (!empty($_GET['logout'])) {
+	UserManager::logout();
+	header('Location: ../');
+	exit;
+}
+
 if (!UserManager::loggedIn()) {
 	header('Location: ../');
 	exit;
@@ -63,6 +69,7 @@ if (!empty($_GET['deleteFile'])) {
 			}
 			?>
 		</div>
+		<p><a href="?logout=1">Logout</a></p>
 	</div>
 	<div id="footer">
 		<p>&copy; 2019 drpdev.de - <a href="https://drpdev.de/privacy/">Privacy Information / Imprint</a>
