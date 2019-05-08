@@ -73,18 +73,19 @@ return [
 				`upload_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 				PRIMARY KEY (`id`),
 				UNIQUE KEY `public_token` (`public_token`)
-			) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4");
+			) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4");
 
 			$stmt2 = $db->pdo()->prepare( "
 			CREATE TABLE `pending_files` (
 				`id` int(11) unsigned NOT NULL AUTO_INCREMENT,
 				`file_name` varchar(200) NOT NULL DEFAULT '',
 				`file_size` bigint(32) NOT NULL DEFAULT '0',
-				PRIMARY KEY (`id`)
-			) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+				PRIMARY KEY (`id`),
+				UNIQUE KEY `file_name` (`file_name`)
+			) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 			");
 
-			if (!$stmt1->execute() && $stmt2->execute()) {
+			if (!$stmt1->execute() || !$stmt2->execute()) {
 				throw new \Exception('tables_not_created');
 			}
 		} catch (\Exception $e) {
