@@ -94,7 +94,11 @@ return [
 			) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4
 			");
 
-			if (!$stmt1->execute() || !$stmt2->execute() || !$stmt3->execute()) {
+			$e1 = $stmt1->execute();
+			$e2 = $stmt2->execute();
+			$e3 = $stmt3->execute();
+
+			if (!$e1 || !$e2 || !$e3) {
 				throw new \Exception('tables_not_created');
 			}
 		} catch (\Exception $e) {

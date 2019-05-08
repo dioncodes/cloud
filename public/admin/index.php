@@ -40,7 +40,7 @@ if (!UserManager::loggedIn()) {
 			}
 
 			if ($pendingFiles = AdminHelper::getPendingFiles()) {
-				echo '<h2>Pending files</h2><ul>';
+				echo '<h1>Pending files</h1><ul>';
 				foreach ($pendingFiles as $pendingFile) {
 					echo '<li>' . $pendingFile['file_name'] . '</li>';
 				}
