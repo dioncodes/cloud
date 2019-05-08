@@ -1,6 +1,5 @@
 # About
 Simply drop files on your server via (S)FTP and receive an email with a secure download link.
-This script 
 
 # Installation
 * clone the repository
