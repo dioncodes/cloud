@@ -85,11 +85,36 @@ return [
 			) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 			");
 
-			if (!$stmt1->execute() || !$stmt2->execute()) {
+			$stmt3 = $db->pdo()->prepare( "
+			CREATE TABLE `users` (
+				`id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+				`username` varchar(200) NOT NULL,
+				`password` varchar(64) NOT NULL,
+				PRIMARY KEY (`id`)
+			) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4
+			");
+
+			if (!$stmt1->execute() || !$stmt2->execute() || !$stmt3->execute()) {
 				throw new \Exception('tables_not_created');
 			}
 		} catch (\Exception $e) {
 			throw new \Exception('tables_not_created');
+		}
+	}
+
+	public static function createUser($username, $password) {
+		try {
+			$dbConfig = require __DIR__ . '/../config/db-config.php';
+			$db = Database::MySQL($dbConfig);
+		} catch (\Exception $e) {
+			throw new \Exception('db_connection_failed');
+		}
+
+		try {
+			$stmt = $db->pdo()->prepare('INSERT INTO `users` SET `username`=:username, `password`=:password');
+			$stmt->execute([':username' => $username, ':password' => password_hash($password, PASSWORD_BCRYPT, ['cost' => 13])]);
+		} catch (\Exception $e) {
+			throw new \Exception('admin_user_not_created');
 		}
 	}
 }

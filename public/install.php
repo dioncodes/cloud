@@ -59,11 +59,21 @@ if (!empty($_POST)) {
 						echo '<p class="error">An error occured while setting up the database tables: ' . $e->getMessage() . '</p>';
 					}
 
+					try {
+						Installer::createUser($_POST['username'], $_POST['password']);
+						echo '<p>Admin user <i>' . htmlspecialchars($_POST['username']) . '</i> created.</p>';
+					} catch (Exception $e) {
+						echo '<p class="error">An error occured while creating admin user: ' . $e->getMessage() . '</p>';
+					}
+
 					echo '<p>Please create a cron job that runs cron/check_files.php every <i>n</i> minutes (depending on this interval, the email notification and public link generation might delay up to <i>n</i> minutes)</p>';
 				} else {
 			?>
 			<form method="POST">
 				<h2>General Config</h2>
+				<label>Admin User:</label>
+				<input type="text" name="username" placeholder="username" /><br />
+				<input type="password" name="password" placeholder="password" /><br />
 				<label>Public token length:</label>
 				<input class="full-width" type="text" name="token_length" placeholder="16" value="16" required /><br />
 				<label>URL</label>
