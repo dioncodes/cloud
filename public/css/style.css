@@ -185,6 +185,14 @@ table.dataTable.no-footer {
 	margin-bottom: 5px;
 }
 
+table.dataTable tbody tr td {
+	border-bottom: 1px solid #00796B;
+}
+
+table.dataTable tbody tr:last-child td {
+	border-bottom: none;
+}
+
 .dataTables_wrapper .dataTables_info {
 	color: #888;
 	font-size: 8pt;
