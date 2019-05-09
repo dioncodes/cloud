@@ -113,7 +113,7 @@ if (!empty($_GET['deleteFile'])) {
 					<tr>
 						<td>Filename</td>
 						<td style="min-width: 100px;" align="right">Filesize</td>
-						<td align="right">Upload date</td>
+						<td style="min-width: 180px;" align="right">Upload date</td>
 						<td></td>
 					</tr>
 				</thead>
