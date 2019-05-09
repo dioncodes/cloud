@@ -125,7 +125,7 @@ if (!empty($_GET['deleteFile'])) {
 				foreach ($files as $file) {
 					echo '
 					<tr>
-						<td><a href="../f/' . $file->getPublicToken() . '">' . htmlspecialchars($file->getFileName()) . '</a></td>
+						<td><a href="../f/' . $file->getPublicToken() . '" target="_blank">' . htmlspecialchars($file->getFileName()) . '</a></td>
 						<td align="right" data-order="' . $file->getFileSize() . '">' . $file->getFormattedFileSize() . '</td>
 						<td align="right" data-order="' . strtotime($file->getUploadDate()) . '">' . date('d.m.Y H:i', strtotime($file->getUploadDate())) . '</td>
 						<td align="right"><a href="?deleteFile=' . $file->getPublicToken() . '" class="delete-btn"><i class="fas fa-trash"></i></a></td>
