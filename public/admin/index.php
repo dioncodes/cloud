@@ -112,8 +112,8 @@ if (!empty($_GET['deleteFile'])) {
 				<thead>
 					<tr>
 						<td>Filename</td>
-						<td>Filesize</td>
-						<td>Upload date</td>
+						<td style="min-width: 100px;" align="right">Filesize</td>
+						<td align="right">Upload date</td>
 						<td></td>
 					</tr>
 				</thead>
@@ -123,8 +123,8 @@ if (!empty($_GET['deleteFile'])) {
 					echo '
 					<tr>
 						<td><a href="../f/' . $file->getPublicToken() . '">' . htmlspecialchars($file->getFileName()) . '</a></td>
-						<td data-order="' . $file->getFileSize() . '">' . $file->getFormattedFileSize() . '</td>
-						<td data-order="' . strtotime($file->getUploadDate()) . '">' . date('d.m.Y H:i', strtotime($file->getUploadDate())) . '</td>
+						<td align="right" data-order="' . $file->getFileSize() . '">' . $file->getFormattedFileSize() . '</td>
+						<td align="right" data-order="' . strtotime($file->getUploadDate()) . '">' . date('d.m.Y H:i', strtotime($file->getUploadDate())) . '</td>
 						<td align="right"><a href="?deleteFile=' . $file->getPublicToken() . '" class="delete-btn"><i class="fas fa-trash"></i></a></td>
 					</tr>';
 				}
