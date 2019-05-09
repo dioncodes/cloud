@@ -79,7 +79,15 @@ if (!empty($_GET['deleteFile'])) {
 						previous: '‹',
 						next: '›'
 					},
-				}
+				},
+				columns: [
+					null,
+					null,
+					null,
+					{
+						"orderable": false
+					}
+				]
 			});
 
 			$('.delete-btn').on('click', function(e) {
@@ -104,7 +112,8 @@ if (!empty($_GET['deleteFile'])) {
 				<thead>
 					<tr>
 						<td>Filename</td>
-						<td>File Size</td>
+						<td>Filesize</td>
+						<td>Upload date</td>
 						<td></td>
 					</tr>
 				</thead>
@@ -115,6 +124,7 @@ if (!empty($_GET['deleteFile'])) {
 					<tr>
 						<td><a href="../f/' . $file->getPublicToken() . '">' . htmlspecialchars($file->getFileName()) . '</a></td>
 						<td data-order="' . $file->getFileSize() . '">' . $file->getFormattedFileSize() . '</td>
+						<td data-order="' . strtotime($file->getUploadDate()) . '">' . date('d.m.Y H:i', strtotime($file->getUploadDate())) . '</td>
 						<td align="right"><a href="?deleteFile=' . $file->getPublicToken() . '" class="delete-btn"><i class="fas fa-trash"></i></a></td>
 					</tr>';
 				}

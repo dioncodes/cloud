@@ -49,11 +49,11 @@ class File {
 
 	public function getFormattedFileSize() {
 		if ($this->fileSize > 1000000000) {
-			return number_format($this->fileSize / 1000000000, 2, ',', '') . ' GB';
+			return number_format($this->fileSize / 1000000000, 2, '.', '') . ' GB';
 		} elseif ($this->fileSize > 1000000) {
-			return number_format($this->fileSize / 1000000, 2, ',', '') . ' MB';
+			return number_format($this->fileSize / 1000000, 2, '.', '') . ' MB';
 		} elseif ($this->fileSize > 1000) {
-			return number_format($this->fileSize / 1000, 2, ',', '') . ' KB';
+			return number_format($this->fileSize / 1000, 2, '.', '') . ' KB';
 		}
 		return $this->fileSize . ' Byte';
 	}
