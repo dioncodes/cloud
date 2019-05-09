@@ -28,7 +28,31 @@ if (!empty($_GET['deleteFile'])) {
 			AdminHelper::deleteFile($file);
 		}
 	} catch (Exception $e) {
-		$message = '<p class="error">Error while trying to delete file: ' . $e->getMessage() . '</p>';
+		switch ($e->getMessage()) {
+			case 'file_not_found':
+				$message = '<p class="error">The file you are trying to delete is not existing anymore.</p>';
+				break;
+
+			case 'file_not_deleted':
+				$message = '<p class="error">The file was deleted in the database and can not be accessed anymore. The file itself could not be deleted (probably due to lack of permissions). Please delete its folder manually: /files/' . $file->getId() . '</p>';
+				break;
+
+			case 'folder_not_deleted':
+				$message = '<p class="error">The file was deleted in the database and can not be accessed anymore. The files folder could not be deleted (probably due to lack of permissions). Please delete it manually: /files/' . $file->getId() . '</p>';
+				break;
+
+			case 'db_connection_failed':
+				$message = '<p class="error">The database connection failed. Please make sure it is configured correctly.</p>';
+				break;
+
+			case 'database_entry_not_deleted':
+				$message = '<p class="error">The files database row could not be deleted. Please try again.</p>';
+				break;
+
+			default:
+				$message = '<p class="error">Error while trying to delete file: ' . $e->getMessage() . '</p>';
+				break;
+		}
 	}
 }
 ?>
@@ -38,7 +62,34 @@ if (!empty($_GET['deleteFile'])) {
 <head>
 	<title>DRPdev Cloud</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+	<link rel="stylesheet" href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" />
 	<link rel="stylesheet" type="text/css" href="../css/style.css?t=<?= filemtime(__DIR__ . '/../css/style.css') ?>" />
+	<script src="../js/jquery.min.js"></script>
+	<script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+	<script>
+		$(function() {
+			$('#file-table').DataTable({
+				bLengthChange: false,
+				pageLength: 10,
+				language: {
+					search: "_INPUT_",
+					searchPlaceholder: "Search",
+					paginate: {
+						previous: '‹',
+						next: '›'
+					},
+				}
+			});
+
+			$('.delete-btn').on('click', function(e) {
+				if (!confirm('Are you sure to completely delete this file? This action cannot be undone!')) {
+					e.preventDefault();
+					return false;
+				}
+			});
+		});
+	</script>
 </head>
 
 <body>
@@ -49,11 +100,26 @@ if (!empty($_GET['deleteFile'])) {
 			<?= $message ?: '' ?>
 			<?php
 			if ($files = AdminHelper::getAllFiles()) {
-				echo '<ul>';
+				echo '<table id="file-table" width="100%">
+				<thead>
+					<tr>
+						<td>Filename</td>
+						<td>File Size</td>
+						<td></td>
+					</tr>
+				</thead>
+				<tbody>
+				';
 				foreach ($files as $file) {
-					echo '<li><a href="../f/' . $file->getPublicToken() . '">' . htmlspecialchars($file->getFileName()) . '</a> - <a href="?deleteFile=' . $file->getPublicToken() . '">Delete</a></li>';
+					echo '
+					<tr>
+						<td><a href="../f/' . $file->getPublicToken() . '">' . htmlspecialchars($file->getFileName()) . '</a></td>
+						<td data-order="' . $file->getFileSize() . '">' . $file->getFormattedFileSize() . '</td>
+						<td align="right"><a href="?deleteFile=' . $file->getPublicToken() . '" class="delete-btn"><i class="fas fa-trash"></i></a></td>
+					</tr>';
 				}
-				echo '</ul>';
+				echo '</tbody>
+				</table>';
 			} else {
 				echo '<p>No files found.</p>';
 			}
@@ -69,10 +135,9 @@ if (!empty($_GET['deleteFile'])) {
 			}
 			?>
 		</div>
-		<p><a href="?logout=1">Logout</a></p>
 	</div>
 	<div id="footer">
-		<p>&copy; 2019 drpdev.de - <a href="https://drpdev.de/privacy/">Privacy Information / Imprint</a>
+		<p>&copy; 2019 drpdev.de - <a href="?logout=1">Logout</a></p>
 	</div>
 </body>
 

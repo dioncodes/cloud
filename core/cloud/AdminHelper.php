@@ -55,11 +55,11 @@ class AdminHelper {
 			throw new \Exception('database_entry_not_deleted');
 		}
 
-		try {
-			unlink(__DIR__ . '/../../files/' .$file->getId() . '/' . $file->getFileName());
-			rmdir(__DIR__ . '/../../files/' . $file->getId());
-		} catch (\Exception $e) {
+		if (!@unlink(__DIR__ . '/../../files/' .$file->getId() . '/' . $file->getFileName())) {
 			throw new \Exception('file_not_deleted');
+		}
+		if (!@rmdir(__DIR__ . '/../../files/' . $file->getId())) {
+			throw new \Exception('folder_not_deleted');
 		}
 	}
 
