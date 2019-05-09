@@ -87,6 +87,9 @@ if (!empty($_GET['deleteFile'])) {
 					{
 						"orderable": false
 					}
+				],
+				order: [
+					[2, "desc"]
 				]
 			});
 
