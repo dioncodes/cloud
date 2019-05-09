@@ -187,6 +187,7 @@ table.dataTable.no-footer {
 
 table.dataTable tbody tr td {
 	border-bottom: 1px solid #00796B;
+	padding: 15px 18px;
 }
 
 table.dataTable tbody tr:last-child td {
